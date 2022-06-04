@@ -11,23 +11,15 @@ export const updateTodo: FastifyPluginAsync = async (fastify, opts) => {
   const options: RouteShorthandOptions = {
     schema: {
       params: S.object().prop("id", S.string()),
-      body: S.object().prop("name", S.string()).prop("completed", S.boolean()),
+      body: S.object().prop("name", S.string()),
     },
   };
-
-  interface PutRequest extends RequestGenericInterface {
-    Params: {
-      id: string;
-    };
-    Body: Partial<Todo>;
-  }
 
   fastify.put<PutRequest>("/:id", options, async (request, reply) => {
     const id = new ObjectId(request.params.id);
     const updateDoc = {
       $set: {
         name: request.body.name,
-        completed: request.body.completed,
       },
     };
     return await fastify.mongo.db
@@ -35,3 +27,12 @@ export const updateTodo: FastifyPluginAsync = async (fastify, opts) => {
       .updateOne({ _id: id }, updateDoc);
   });
 };
+
+interface PutRequest extends RequestGenericInterface {
+  Params: {
+    id: string;
+  };
+  Body: {
+    name: string;
+  };
+}
