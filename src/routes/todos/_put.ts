@@ -31,7 +31,7 @@ export const updateTodo: FastifyPluginAsync = async (fastify, opts) => {
       },
     };
     return await fastify.mongo.db
-      ?.collection("todos")
+      ?.collection<Todo>("todos")
       .updateOne({ _id: id }, updateDoc);
   });
 };

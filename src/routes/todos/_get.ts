@@ -2,6 +2,7 @@ import { ObjectId } from "@fastify/mongodb";
 import { FastifyPluginAsync, RequestGenericInterface } from "fastify";
 import { RouteShorthandOptions } from "fastify/types/route";
 import S from "fluent-json-schema";
+import { Todo } from "../../lib/todo.interface";
 
 export const getAllTodos: FastifyPluginAsync = async (fastify, opts) => {
   const options: RouteShorthandOptions = {
@@ -14,7 +15,7 @@ export const getAllTodos: FastifyPluginAsync = async (fastify, opts) => {
 
   fastify.get("/", options, async (request, opts) => {
     const todos = await fastify.mongo.db
-      ?.collection("todos")
+      ?.collection<Todo>("todos")
       .find({})
       .toArray();
     return { todos };
@@ -37,7 +38,9 @@ export const getTodoById: FastifyPluginAsync = async (fastify, opts) => {
   fastify.get<GetOneRequest>("/:id", options, async (request, opts) => {
     console.log(request.params);
     const id = new ObjectId(request.params.id);
-    return await fastify.mongo.db?.collection("todos").findOne({ _id: id });
+    return await fastify.mongo.db
+      ?.collection<Todo>("todos")
+      .findOne({ _id: id });
   });
 };
 

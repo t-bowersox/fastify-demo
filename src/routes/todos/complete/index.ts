@@ -5,6 +5,7 @@ import {
   RouteShorthandOptions,
 } from "fastify";
 import Schema from "fluent-json-schema";
+import { Todo } from "../../../lib/todo.interface";
 
 const complete: FastifyPluginAsync = async (fastify, opts) => {
   const options: RouteShorthandOptions = {
@@ -22,7 +23,7 @@ const complete: FastifyPluginAsync = async (fastify, opts) => {
   fastify.put<PutRequest>("/:id", options, async (request, reply) => {
     const id = new ObjectId(request.params.id);
     return await fastify.mongo.db
-      ?.collection("todos")
+      ?.collection<Todo>("todos")
       .updateOne({ _id: id }, { $set: { completed: true } });
   });
 };

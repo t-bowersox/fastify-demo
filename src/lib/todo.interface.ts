@@ -1,5 +1,7 @@
+import { ObjectId } from "@fastify/mongodb";
+
 export interface Todo {
-  id?: string;
+  id?: ObjectId;
   name: string;
   completed: boolean;
 }
