@@ -8,7 +8,12 @@ export const getAllTodos: FastifyPluginAsync = async (fastify, opts) => {
   const options: RouteShorthandOptions = {
     schema: {
       response: {
-        200: S.object().prop("todos", S.array()),
+        200: S.array().items(
+          S.object()
+            .prop("_id", S.string())
+            .prop("name", S.string())
+            .prop("completed", S.boolean())
+        ),
       },
     },
   };
@@ -18,7 +23,7 @@ export const getAllTodos: FastifyPluginAsync = async (fastify, opts) => {
       ?.collection<Todo>("todos")
       .find({})
       .toArray();
-    return { todos };
+    return todos;
   });
 };
 
