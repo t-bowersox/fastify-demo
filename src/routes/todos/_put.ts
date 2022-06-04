@@ -11,7 +11,7 @@ export const updateTodo: FastifyPluginAsync = async (fastify, opts) => {
   const options: RouteShorthandOptions = {
     schema: {
       params: S.object().prop("id", S.string()),
-      body: S.object().prop("name", S.string()),
+      body: S.object().prop("name", S.string().required()),
     },
   };
 
