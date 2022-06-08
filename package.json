@@ -19,9 +19,11 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/autoload": "^4.0.0",
+    "@fastify/awilix": "^2.0.0",
     "@fastify/env": "^3.0.0",
     "@fastify/mongodb": "^5.0.0",
     "@fastify/sensible": "^4.0.0",
+    "awilix": "^7.0.3",
     "fastify": "^3.0.0",
     "fastify-cli": "^3.1.0",
     "fastify-plugin": "^3.0.0",

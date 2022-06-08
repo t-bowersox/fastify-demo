@@ -1,8 +1,8 @@
 import { FastifyPluginAsync } from "fastify";
-import { deleteTodo } from "./_delete";
-import { getAllTodos, getTodoById } from "./_get";
-import { createTodo } from "./_post";
-import { updateTodo } from "./_put";
+import { deleteTodo } from "./delete";
+import { getAllTodos, getTodoById } from "./get";
+import { createTodo } from "./post";
+import { updateTodo } from "./put";
 
 const todos: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.register(createTodo);

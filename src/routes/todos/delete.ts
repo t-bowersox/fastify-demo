@@ -5,7 +5,6 @@ import {
   RouteShorthandOptions,
 } from "fastify";
 import S from "fluent-json-schema";
-import { Todo } from "../../lib/todo.interface";
 
 export const deleteTodo: FastifyPluginAsync = async (fastify, opts) => {
   const options: RouteShorthandOptions = {
@@ -14,11 +13,11 @@ export const deleteTodo: FastifyPluginAsync = async (fastify, opts) => {
     },
   };
 
+  const controller = fastify.diContainer.resolve("todoController");
+
   fastify.delete<DeleteRequest>("/:id", options, async (request, reply) => {
     const id = new ObjectId(request.params.id);
-    return await fastify.mongo.db
-      ?.collection<Todo>("todos")
-      .deleteOne({ _id: id });
+    return controller.deleteTodo(id);
   });
 };
 
